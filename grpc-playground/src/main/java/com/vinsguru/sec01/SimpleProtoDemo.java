@@ -2,7 +2,7 @@ package com.vinsguru.sec01;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.vinsguru.models.PersonOuterClass;
+import com.vinsguru.models.sec01.PersonOuterClass;
 
 
 public class SimpleProtoDemo {
