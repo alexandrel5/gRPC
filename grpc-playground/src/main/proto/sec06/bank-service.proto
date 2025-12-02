@@ -10,7 +10,7 @@ message BalanceCheckRequest {
 }
 
 message AccountBalance {
-  int32 account_number = 1;
+  int32 account_number = 3;
   int32 balance = 2;
 }
 
