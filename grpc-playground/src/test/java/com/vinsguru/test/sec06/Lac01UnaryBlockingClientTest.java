@@ -1,5 +1,6 @@
 package com.vinsguru.test.sec06;
 
+import com.google.protobuf.Empty;
 import com.vinsguru.models.sec06.BalanceCheckRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,5 +19,11 @@ public class Lac01UnaryBlockingClientTest extends AbstractTest {
         log.info("unary balance received: {}", balance);
 
         Assertions.assertEquals(100, balance.getBalance());
+    }
+
+    @Test
+    public void getAllAccountTest() {
+        var allAccounts = this.blockingStub.getAllAccounts(Empty.getDefaultInstance());
+        log.info("all balance received: {}", allAccounts);
     }
 }
