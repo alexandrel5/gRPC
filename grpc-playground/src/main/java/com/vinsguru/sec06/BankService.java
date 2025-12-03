@@ -1,14 +1,19 @@
 package com.vinsguru.sec06;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import com.google.protobuf.Empty;
-import com.vinsguru.models.sec06.AccountBalance;
-import com.vinsguru.models.sec06.AllAccountResponse;
-import com.vinsguru.models.sec06.BalanceCheckRequest;
-import com.vinsguru.models.sec06.BankServiceGrpc;
+import com.vinsguru.common.GrpcServer;
+import com.vinsguru.models.sec06.*;
 import com.vinsguru.sec06.repository.AccountRepository;
 import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeUnit;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase{
+
+    private static final Logger log = LoggerFactory.getLogger(BankService.class);
 
     @Override
     public void getAccountBalance(BalanceCheckRequest request, StreamObserver<AccountBalance> responseObserver) {
@@ -36,5 +41,34 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase{
                 .addAllAccounts(accounts).build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void withdraw(WithdrawRequest request, StreamObserver<Money> responseObserver) {
+       /*
+        Ideally we should do some input validation. But we are going to assume only happy path scenarios.
+        Because, in gRPC, there are multiple ways to communicate the error message to the client. It has to be
+        discussed in detail separately.
+        Assumption: account # 1 - 10 & withdraw amount is multiple of $10
+       */
+        var accountNumber = request.getAccountsNumber();
+        var requestedAmount = request.getAmount();
+        var accountBalance = AccountRepository.getBalance(accountNumber);
+
+        if(requestedAmount > accountBalance) {
+            responseObserver.onCompleted();
+            return;
+        }
+
+        for (int i = 0; i < (requestedAmount / 10); i++) {
+            var money = Money.newBuilder().setAmount(10).build();
+            responseObserver.onNext(money);
+            log.info("Money sent {}", money);
+            AccountRepository.deductAmount(accountNumber, 10);
+            Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
+        }
+
+        responseObserver.onCompleted();
+
     }
 }
