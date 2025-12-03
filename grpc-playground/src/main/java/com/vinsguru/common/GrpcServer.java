@@ -1,6 +1,7 @@
 package com.vinsguru.common;
 
 import io.grpc.*;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -8,7 +9,7 @@ import java.util.Arrays;
 
 public class GrpcServer {
 
-    private static final org.slf4j.Logger  log = LoggerFactory.getLogger(GrpcServer.class);
+    private static final Logger  log = LoggerFactory.getLogger(GrpcServer.class);
     private final Server server;
 
     private GrpcServer(Server server){
