@@ -66,5 +66,6 @@ service BankService {
 }
 
 service TransferService {
+  // bidirectional streaming
   rpc Transfer(stream TransferRequest) returns (stream TransferResponse);
 }

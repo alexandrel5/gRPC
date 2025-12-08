@@ -22,8 +22,8 @@ public class TransferRequestHandler implements StreamObserver<TransferRequest> {
     public void onNext(TransferRequest transferRequest) {
         var status = this.transfer(transferRequest);
         var response = TransferResponse.newBuilder()
-                .setFromAccount(this.toAcountBalance(transferRequest.getFromAccount()))
-                .setToAccount(this.toAcountBalance(transferRequest.getToAccount()))
+                .setFromAccount(this.toAccountBalance(transferRequest.getFromAccount()))
+                .setToAccount(this.toAccountBalance(transferRequest.getToAccount()))
                 .setStatus(status)
                 .build();
         this.responseObserver.onNext(response);
@@ -53,7 +53,7 @@ public class TransferRequestHandler implements StreamObserver<TransferRequest> {
         return status;
     }
 
-    private AccountBalance toAcountBalance(int accountNumber) {
+    private AccountBalance toAccountBalance(int accountNumber) {
         return AccountBalance.newBuilder()
                 .setAccountNumber(accountNumber)
                 .setBalance(AccountRepository.getBalance(accountNumber))
