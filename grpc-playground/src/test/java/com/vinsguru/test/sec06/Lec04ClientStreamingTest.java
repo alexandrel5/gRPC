@@ -29,8 +29,8 @@ public class Lec04ClientStreamingTest extends AbstractTest {
         //at this point out response observer should receiver a response
         responseObserver.await();
 
-        Assertions.assertEquals(1, responseObserver.getItens().size());
-        Assertions.assertEquals(200, responseObserver.getItens().get(0).getBalance());
+        Assertions.assertEquals(1, responseObserver.getItems().size());
+        Assertions.assertEquals(200, responseObserver.getItems().get(0).getBalance());
         Assertions.assertNull(responseObserver.getThrowable());
     }
 

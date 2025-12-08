@@ -35,8 +35,8 @@ public class Lec03ServerStreamingClientTest extends AbstractTest {
         var observer = ResponseObserver.<Money>create();
         this.bankStub.withdraw(request, observer);
         observer.await();
-        Assertions.assertEquals(2, observer.getItens().size());
-        Assertions.assertEquals(10, observer.getItens().get(0).getAmount());
+        Assertions.assertEquals(2, observer.getItems().size());
+        Assertions.assertEquals(10, observer.getItems().get(0).getAmount());
         Assertions.assertNull(observer.getThrowable());
     }
 

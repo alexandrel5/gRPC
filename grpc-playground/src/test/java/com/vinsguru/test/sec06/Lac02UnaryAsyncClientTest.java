@@ -21,8 +21,8 @@ public class Lac02UnaryAsyncClientTest extends AbstractTest {
         var observer = ResponseObserver.<AccountBalance>create();
         this.bankStub.getAccountBalance(request, observer );
         observer.await();
-        Assertions.assertEquals(1, observer.getItens().size());
-        Assertions.assertEquals(100, observer.getItens().get(0).getBalance());
+        Assertions.assertEquals(1, observer.getItems().size());
+        Assertions.assertEquals(100, observer.getItems().get(0).getBalance());
         Assertions.assertNull(observer.getThrowable());
     }
 
@@ -31,8 +31,8 @@ public class Lac02UnaryAsyncClientTest extends AbstractTest {
         var observer = ResponseObserver.<AllAccountResponse>create();
         this.bankStub.getAllAccounts(Empty.getDefaultInstance(), observer);
         observer.await();
-        Assertions.assertEquals(1, observer.getItens().size());
-        Assertions.assertEquals(10, observer.getItens().get(0).getAccountsCount());
+        Assertions.assertEquals(1, observer.getItems().size());
+        Assertions.assertEquals(10, observer.getItems().get(0).getAccountsCount());
         Assertions.assertNull(observer.getThrowable());
     }
 }
