@@ -15,7 +15,7 @@ public class Lac01UnaryBlockingClientTest extends AbstractTest {
         var request  = BalanceCheckRequest.newBuilder()
                 .setAccountNumber(1)
                 .build();
-        var balance = this.blockingStub.getAccountBalance(request);
+        var balance = this.bankBlockingStub.getAccountBalance(request);
         log.info("unary balance received: {}", balance);
 
         Assertions.assertEquals(100, balance.getBalance());
@@ -23,7 +23,7 @@ public class Lac01UnaryBlockingClientTest extends AbstractTest {
 
     @Test
     public void getAllAccountTest() {
-        var allAccounts = this.blockingStub.getAllAccounts(Empty.getDefaultInstance());
+        var allAccounts = this.bankBlockingStub.getAllAccounts(Empty.getDefaultInstance());
         log.info("all balance received: {}", allAccounts);
     }
 }

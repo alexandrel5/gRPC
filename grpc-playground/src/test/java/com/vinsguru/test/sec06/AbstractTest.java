@@ -2,6 +2,7 @@ package com.vinsguru.test.sec06;
 
 import com.vinsguru.common.GrpcServer;
 import com.vinsguru.models.sec06.BankServiceGrpc;
+import com.vinsguru.models.sec06.TransferServiceGrpc;
 import com.vinsguru.sec06.BankService;
 import com.vinsguru.test.common.AbstractChannelTest;
 import org.junit.jupiter.api.AfterAll;
@@ -9,14 +10,16 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class AbstractTest extends AbstractChannelTest {
     private final GrpcServer grpcServer = GrpcServer.create(new BankService());
-    protected BankServiceGrpc.BankServiceStub stub;
-    protected BankServiceGrpc.BankServiceBlockingStub blockingStub;
+    protected BankServiceGrpc.BankServiceStub bankStub;
+    protected BankServiceGrpc.BankServiceBlockingStub bankBlockingStub;
+    protected TransferServiceGrpc.TransferServiceStub transferStub;
 
     @BeforeAll
     public void setup() {
         this.grpcServer.start();
-        this.stub = BankServiceGrpc.newStub(channel);
-        this.blockingStub = BankServiceGrpc.newBlockingStub(channel);
+        this.bankStub = BankServiceGrpc.newStub(channel);
+        this.bankBlockingStub = BankServiceGrpc.newBlockingStub(channel);
+        this.transferStub = TransferServiceGrpc.newStub(channel);
     }
 
     @AfterAll

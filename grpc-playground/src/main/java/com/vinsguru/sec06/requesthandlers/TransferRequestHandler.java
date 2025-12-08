@@ -4,7 +4,6 @@ import com.vinsguru.models.sec06.AccountBalance;
 import com.vinsguru.models.sec06.TransferRequest;
 import com.vinsguru.models.sec06.TransferResponse;
 import com.vinsguru.models.sec06.TransferStatus;
-import com.vinsguru.sec06.BankService;
 import com.vinsguru.sec06.repository.AccountRepository;
 import io.grpc.stub.StreamObserver;
 import org.slf4j.Logger;
@@ -12,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 public class TransferRequestHandler implements StreamObserver<TransferRequest> {
 
-    private static final Logger log = LoggerFactory.getLogger(BankService.class);
+    private static final Logger log = LoggerFactory.getLogger(TransferRequestHandler.class);
     private final StreamObserver<TransferResponse> responseObserver;
 
     public TransferRequestHandler(StreamObserver<TransferResponse> responseObserver) {
@@ -41,15 +40,15 @@ public class TransferRequestHandler implements StreamObserver<TransferRequest> {
         this.responseObserver.onCompleted();
     }
 
-    private TransferStatus transfer(TransferRequest request){
+    private TransferStatus transfer(TransferRequest request) {
         var amount = request.getAmount();
         var fromAccount = request.getFromAccounts();
         var toAccount = request.getToAccounts();
         var status = TransferStatus.REJECTED;
-        if(AccountRepository.getBalance(fromAccount) >= amount && (fromAccount != toAccount)){
+        if (AccountRepository.getBalance(fromAccount) >= amount && (fromAccount != toAccount)) {
             AccountRepository.deductAmount(fromAccount, amount);
             AccountRepository.addAmount(toAccount, amount);
-            status = TransferStatus.COMPLETE;
+            status = TransferStatus.COMPLETED;
         }
         return status;
     }
