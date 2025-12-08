@@ -37,8 +37,8 @@ message DepositRequest {
 }
 
 message TransferRequest {
-  int32 from_accounts = 1;
-  int32 to_accounts = 2;
+  int32 from_account = 1;
+  int32 to_account = 2;
   int32 amount = 3;
 }
 
